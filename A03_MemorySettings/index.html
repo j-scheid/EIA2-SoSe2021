@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CustomMemory</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&display=swap" rel="stylesheet"> 
+  </head>
+
+  <body>
+    <h1>CustomMemory™</h1>
+    <form action="index.html" method="post">
+      <div class="form">
+        <h2>Customize your experience</h2>
+        <p>How many pairs should be in the game?</p>
+        <input
+          type="number"
+          name="Number"
+          placeholder="5"
+          min="5"
+          max="25"
+          step="1"
+          id="number"
+        />
+        <p>How big do you want the cards?</p>
+        <span>
+          50px
+          <input
+            type="range"
+            name="Slider"
+            min="50"
+            max="200"
+            step="1"
+            id="slider"
+          />
+          200px
+        </span>
+        <p>Choose a color for your playing field</p>
+        <input
+          type="color"
+          name="backgroundColor"
+          placeholder="green"
+          id="backgroundColor"
+          value="#B4D2BA"
+        />
+        <p>What would you like the cards to look like?</p>
+        <input
+          type="color"
+          name="cardColor"
+          placeholder="green"
+          id="cardColor"
+          value="#DCE2AA"
+        />
+        <p>Make sure to have a readable text color:</p>
+        <input
+          type="color"
+          name="textColor"
+          placeholder="green"
+          id="textColor"
+          value="#B57F50"
+        />
+        <p>Any prefered fonts?</p>
+        <input
+          type="radio"
+          name="fontFamily"
+          checked
+          value="Montserrat"
+          class="radio"
+        />
+        <label for="radio" style=" font-family: 'Montserrat', sans-serif;">Montserrat</label>
+        <input
+          type="radio"
+          name="fontFamily"
+          value="Karantina"
+          class="radio"
+        />
+        <label for="radio" style=" font-family: 'Karantina', sans-serif;">Karantina</label>
+        <input
+          type="radio"
+          name="fontFamily"
+          value="New Tegomi"
+          class="radio"
+        />
+        <label for="radio" style=" font-family: 'New Tegomi', sans-serif;">New Tegomi</label>
+        <br>
+        <button>Start</button>
+      </div>
+    </form>
+  </body>
+</html>
