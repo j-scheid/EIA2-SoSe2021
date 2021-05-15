@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+    background-color: rgb(24, 24, 24);
+}
+
+.canvas {
+    height: 700px;
+    width: 400px;
+    padding-top: 0px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: rgb(248, 206, 68);
+    border-width: 10px;
+    border-style: solid;
+}
