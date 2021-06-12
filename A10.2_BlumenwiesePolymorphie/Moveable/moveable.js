@@ -1,0 +1,18 @@
+var Polymorphie;
+(function (Polymorphie) {
+    var Moveable = /** @class */ (function () {
+        function Moveable(_position) {
+            this.yPos = _position.y;
+            this.xPos = _position.x;
+        }
+        Moveable.prototype.update = function () {
+            if (this.xPos > Polymorphie.crc2.canvas.width || this.xPos < 0) {
+                this.velocityX = -this.velocityX;
+            }
+            this.xPos += this.velocityX;
+            this.draw();
+        };
+        return Moveable;
+    }());
+    Polymorphie.Moveable = Moveable;
+})(Polymorphie || (Polymorphie = {}));
