@@ -19,7 +19,6 @@ namespace Polymorphie {
       }
 
       this.xPos += this.velocityX;
-      this.draw();
     }
   }
 }

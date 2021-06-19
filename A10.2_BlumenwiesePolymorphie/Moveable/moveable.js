@@ -10,7 +10,6 @@ var Polymorphie;
                 this.velocityX = -this.velocityX;
             }
             this.xPos += this.velocityX;
-            this.draw();
         };
         return Moveable;
     }());
