@@ -39,12 +39,12 @@ var Final;
         Linesman.prototype.render = function (ctx, game) {
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.fillStyle = "green";
+            ctx.fillStyle = "#353535";
             ctx.arc(this.position.x, this.position.y, Linesman.SIZE, 0, 2 * Math.PI, false);
             ctx.fill();
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.fillStyle = "#88FF00";
+            ctx.fillStyle = "#a0e5da";
             ctx.arc(this.position.x, this.position.y, Linesman.SIZE / 2, 0, 2 * Math.PI, false);
             ctx.fill();
         };

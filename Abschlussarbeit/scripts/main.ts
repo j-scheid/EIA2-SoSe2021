@@ -12,7 +12,6 @@ namespace Final {
 
   export const DEBUG: boolean = false;
 
-  //util
   export function randomBetween(min: number, max: number): number {
     return min + Math.random() * (max - min);
   }
@@ -44,6 +43,11 @@ namespace Final {
       mouse.set(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop);
     });
 
+    //Popup
+    /*let popup: HTMLElement = document.querySelector("#startPopup");
+    const closePopUp: HTMLElement = document.querySelector("#closePopup");
+    closePopUp.addEventListener("click", togglePopup(popup));*/
+
     game = new Game();
 
     loop();
@@ -56,4 +60,8 @@ namespace Final {
     window.requestAnimationFrame(loop);
   }
   window.onload = init;
+
+  function togglePopup(_popup: HTMLElement): void {
+    _popup.classList.toggle("show");
+  }
 }

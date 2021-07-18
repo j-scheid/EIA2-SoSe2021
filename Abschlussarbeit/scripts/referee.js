@@ -44,12 +44,12 @@ var Final;
         Referee.prototype.render = function (ctx, game) {
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.fillStyle = "orange";
+            ctx.fillStyle = "#23231f";
             ctx.arc(this.position.x, this.position.y, Referee.SIZE, 0, 2 * Math.PI, false);
             ctx.fill();
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.fillStyle = "yellow";
+            ctx.fillStyle = "#efef15";
             ctx.arc(this.position.x, this.position.y, Referee.SIZE / 2, 0, 2 * Math.PI, false);
             ctx.fill();
             if (Final.DEBUG) {

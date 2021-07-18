@@ -21,8 +21,8 @@ namespace Final {
       );
       this.entities = [];
 
-      this.team1Color = "#FF00FF";
-      this.team2Color = "#0077FF";
+      this.team1Color = "#F38A5E";
+      this.team2Color = "#5194E1";
 
       this.initSoccer();
       this.initGUI();

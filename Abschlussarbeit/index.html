@@ -1,91 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="style/style.css" />
-		<title>Fußball-Simulation Abschlussarbeit S21</title>
-	</head>
-	<body>
-		<main>
-			<div id="gameInfo">
-				<p>Posession: <span id="displayPosession"></span></p>
-				<p>Score: <span id="displayScore"></span></p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>Fußball-Simulation Abschlussarbeit S21</title>
+  </head>
+  <body>
+    <main>
+      <div id="gameInfo">
+        <p>Posession: <span id="displayPosession"></span></p>
+        <p>Score: <span id="displayScore"></span></p>
+      </div>
+
+      <canvas id="gameCanvas" width="700" height="910"></canvas>
+
+      <div class="box" id="playerDialog">
+        <h3>
+          Selected Player
+          <div class="tooltip">
+            <i class="fas fa-question-circle"></i
+            ><span class="tooltiptext"
+              >Click on a player or cycle through all using the left and right
+              arrow keys.</span
+            >
+          </div>
+        </h3>
+        <span class="hidden" id="selectedPlayer"></span>
+        <p>Number: <span id="displayNumber"></span></p>
+        <p>Team: <span id="displayTeam"></span></p>
+        <p>Inaccuracy: <span id="displayInaccuracy"></span></p>
+        <p>Speed: <span id="displaySpeed"></span></p>
+        <button id="removeBtn">Remove</button>
+        <button id="addBtn">Add<div class="tooltip">
+			<i class="fas fa-question-circle"></i
+			><span class="tooltiptext"
+			  >Click to choose a position with your cursor. The new player will be added to the team of the current selected player.</span
+			>
+		  </div></button>
+      </div>
+
+      <div class="box" id="settingsDialog">
+        <h2>Settings</h2>
+
+        <div id="colorPicker">
+          <h3>Team 1</h3>
+          <p>Color <input id="color1" type="color" /></p>
+          <h3>Team 2</h3>
+          <p>Color <input id="color2" type="color" /></p>
+        </div>
+		<h3>
+			Generate new stats
+			<div class="tooltip">
+			  <i class="fas fa-question-circle"></i
+			  ><span class="tooltiptext"
+				>A random value between Min and Max will be assigned to each player.</span
+			  >
 			</div>
-			
-			<canvas id="gameCanvas" width="700" height="910"></canvas>
+		  </h3>
+        <form onSubmit="return false;" action="">
+          <div class="formSection">
+            <h4>Inaccuracy</h4>
+            <div class="formElement">
+              <label>Min</label>
+              <input
+                required
+                type="number"
+                placeholder="Min"
+                id="minInaccuracy"
+                value="0"
+              />
+            </div>
+            <div class="formElement">
+              <label>Max</label>
+              <input
+                required
+                type="number"
+                placeholder="Max"
+                id="maxInaccuracy"
+                value="100"
+              />
+            </div>
+          </div>
 
-			<div class= "box" id="playerDialog">
-				<h3>Click on a player or use the arrow keys to see the statistics:</h3>
-				<span class="hidden" id="selectedPlayer"></span>
-				<p>Number: <span id="displayNumber"></span></p>
-				<p>Team: <span id="displayTeam"></span></p>
-				<p>Inaccuracy: <span id="displayInaccuracy"></span></p>
-				<p>Speed: <span id="displaySpeed"></span></p>
-				<button id="removeBtn">Remove</button>
-				<button id="addBtn">Add</button>
-			</div>
+          <div class="formSection">
+            <h4>Speed</h4>
+            <div class="formElement">
+              <label>Min</label>
+              <input
+                required
+                type="number"
+                placeholder="Min"
+                id="minSpeed"
+                value="1"
+              />
+            </div>
+            <div class="formElement">
+              <label>Max</label>
+              <input
+                required
+                type="number"
+                placeholder="Max"
+                id="maxSpeed"
+                value="4"
+              />
+            </div>
+          </div>
+          <button type="submit">Generate</button>
+        </form>
+      </div>
+    </main>
 
-			<div class= "box" id="settingsDialog">
-				<h2>Settings</h2>
+    <div class="footer">
+      <p>Jonas Scheid, 267316</p>
+    </div>
 
-				<div id="colorPicker">
-					<h3>Team 1</h3>
-					<p>Color <input id="color1" type="color" /></p>
-					<h3>Team 2</h3>
-					<p>Color <input id="color2" type="color" /></p>
-				</div>
-				<form onSubmit="return false;" action="">
-					<div class="formSection">
-						<h2>Inaccuracy</h2>
-						<div class="formElement">
-							<label>Min</label>
-							<input required type="number" placeholder="Min" id="minInaccuracy" value="0" />
-						</div>
-						<div class="formElement">
-							<label>Max</label>
-							<input required type="number" placeholder="Max" id="maxInaccuracy" value="100" />
-						</div>
-					</div>
+    <script src="scripts/field.js"></script>
+    <script src="scripts/game.js"></script>
+    <script src="scripts/movable.js"></script>
 
-					<div class="formSection">
-						<h2>Speed</h2>
-						<div class="formElement">
-							<label>Min</label>
-							<input required type="number" placeholder="Min" id="minSpeed" value="1" />
-						</div>
-						<div class="formElement">
-							<label>Max</label>
-							<input required type="number" placeholder="Max" id="maxSpeed" value="4" />
-						</div>
-					</div>
-					<button type="submit">Submit</button>
-				</form>
-			</div>
-		</main>
+    <script src="scripts/vector.js"></script>
+    <script src="scripts/rectangle.js"></script>
+    <script src="scripts/ball.js"></script>
 
-		<div class="footer">
-			<p>Jonas Scheid, 267316</p>
-		</div>
+    <script src="scripts/linesman.js"></script>
+    <script src="scripts/player.js"></script>
+    <script src="scripts/referee.js"></script>
 
-		<script src="scripts/field.js"></script>
-		<script src="scripts/game.js"></script>
-		<script src="scripts/movable.js"></script>
-
-		<script src="scripts/vector.js"></script>
-		<script src="scripts/rectangle.js"></script>
-		<script src="scripts/ball.js"></script>
-
-		<script src="scripts/linesman.js"></script>
-		<script src="scripts/player.js"></script>
-		<script src="scripts/referee.js"></script>
-
-
-		<script src="scripts/main.js"></script>
-	</body>
+    <script src="scripts/main.js"></script>
+  </body>
 </html>

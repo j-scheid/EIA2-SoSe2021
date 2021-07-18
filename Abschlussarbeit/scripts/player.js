@@ -61,7 +61,7 @@ var Final;
             selectedPlayer.innerHTML =
                 this.team === 1
                     ? (-1 * this.playerNumber).toString()
-                    : this.playerNumber.toString(); //???
+                    : this.playerNumber.toString();
         };
         Player.prototype.showInformation = function () {
             this.makeSelectedPlayer();

@@ -8,7 +8,6 @@ Quellen: EIAsteroids
 var Final;
 (function (Final) {
     Final.DEBUG = false;
-    //util
     function randomBetween(min, max) {
         return min + Math.random() * (max - min);
     }
@@ -34,6 +33,10 @@ var Final;
         Final.canvas.addEventListener("mousemove", function (e) {
             Final.mouse.set(e.pageX - Final.canvas.offsetLeft, e.pageY - Final.canvas.offsetTop);
         });
+        //Popup
+        /*let popup: HTMLElement = document.querySelector("#startPopup");
+        const closePopUp: HTMLElement = document.querySelector("#closePopup");
+        closePopUp.addEventListener("click", togglePopup(popup));*/
         game = new Final.Game();
         loop();
     }
@@ -43,4 +46,7 @@ var Final;
         window.requestAnimationFrame(loop);
     }
     window.onload = init;
+    function togglePopup(_popup) {
+        _popup.classList.toggle("show");
+    }
 })(Final || (Final = {}));

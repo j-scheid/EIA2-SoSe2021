@@ -56,7 +56,7 @@ namespace Final {
       selectedPlayer.innerHTML =
         this.team === 1
           ? (-1 * this.playerNumber).toString()
-          : this.playerNumber.toString(); //???
+          : this.playerNumber.toString();
     }
 
     showInformation(): void {

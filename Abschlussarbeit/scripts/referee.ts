@@ -25,7 +25,7 @@ namespace Final {
     render(ctx: CanvasRenderingContext2D, game: Game): void {
       ctx.beginPath();
       ctx.lineWidth = 2;
-      ctx.fillStyle = "orange";
+      ctx.fillStyle = "#23231f";
       ctx.arc(
         this.position.x,
         this.position.y,
@@ -38,7 +38,7 @@ namespace Final {
 
       ctx.beginPath();
       ctx.lineWidth = 2;
-      ctx.fillStyle = "yellow";
+      ctx.fillStyle = "#efef15";
       ctx.arc(
         this.position.x,
         this.position.y,
