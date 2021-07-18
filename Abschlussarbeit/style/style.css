@@ -1,0 +1,91 @@
+.hidden {
+  display: none;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: #74a765;
+  text-align: center;
+  padding: 15px;
+}
+
+#gameCanvas {
+  margin-top: 100px;
+}
+
+#gameInfo {
+  width: 20%;
+  z-index: 5;
+  display: inline-block;
+  background-color: white;
+  color: rgb(24, 24, 24);
+  text-align: center;
+  border-radius: 15px;
+  position: absolute;
+  left: 40%;
+  -webkit-box-shadow: 9px 10px 25px 2px rgba(0, 0, 0, 0.219);
+  box-shadow: 9px 10px 25px 2px rgba(0, 0, 0, 0.219);
+}
+
+.box {
+  width: 200px;
+  height: 550px;
+  z-index: 5;
+  display: inline-block;
+  padding: 30px 50px;
+  background-color: white;
+  color: rgb(24, 24, 24);
+  text-align: center;
+  border-radius: 15px;
+  margin: auto;
+  position: absolute;
+  -webkit-box-shadow: 9px 10px 25px 2px rgba(0, 0, 0, 0.219);
+  box-shadow: 9px 10px 25px 2px rgba(0, 0, 0, 0.219);
+}
+
+#settingsDialog {
+  margin-left: 10%;
+  left: 0;
+}
+
+#playerDialog {
+  margin-right: 10%;
+  right: 0;
+}
+
+button {
+  right: 10px;
+  top: 17px;
+  font-size: 1.3em;
+  background: none;
+  border: none;
+  outline: none;
+  color: #7cacc8;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #57638b;
+  transform: scale(1.1);
+}
+
+.formSection {
+  margin-top: 20px;
+}
+
+.formElement {
+  display: flex;
+  margin-top: 10px;
+}
+
+.formElement label {
+  margin-right: 10px;
+}
+
+.formElement input {
+  width: 80%;
+}
+
+form button[type="submit"] {
+  margin-top: 30px;
+}
