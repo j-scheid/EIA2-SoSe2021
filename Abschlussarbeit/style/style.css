@@ -29,7 +29,6 @@ body {
 
 .box {
   width: 200px;
-  height: 550px;
   z-index: 5;
   display: inline-block;
   padding: 30px 50px;
@@ -46,11 +45,13 @@ body {
 #settingsDialog {
   margin-left: 10%;
   left: 0;
+  height: 750px;
 }
 
 #playerDialog {
   margin-right: 10%;
   right: 0;
+  height: 250px;
 }
 
 button {
@@ -60,12 +61,12 @@ button {
   background: none;
   border: none;
   outline: none;
-  color: #7cacc8;
+  color: #df8f45;
   cursor: pointer;
 }
 
 button:hover {
-  color: #57638b;
+  color: #c37d3bc4;
   transform: scale(1.1);
 }
 
@@ -138,4 +139,21 @@ label {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+input[type=number], select {
+  position: absolute;
+  width: 80px;
+  padding: 12px 20px;
+  margin: 0px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: right;
+  right: 20px;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
 }

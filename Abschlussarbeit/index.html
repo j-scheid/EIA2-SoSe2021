@@ -41,12 +41,16 @@
         <p>Inaccuracy: <span id="displayInaccuracy"></span></p>
         <p>Speed: <span id="displaySpeed"></span></p>
         <button id="removeBtn">Remove</button>
-        <button id="addBtn">Add<div class="tooltip">
-			<i class="fas fa-question-circle"></i
-			><span class="tooltiptext"
-			  >Click to choose a position with your cursor. The new player will be added to the team of the current selected player.</span
-			>
-		  </div></button>
+        <button id="addBtn">
+          Add
+          <div class="tooltip">
+            <i class="fas fa-question-circle"></i
+            ><span class="tooltiptext"
+              >Click to choose a position with your cursor. The new player will
+              be added to the team of the current selected player.</span
+            >
+          </div>
+        </button>
       </div>
 
       <div class="box" id="settingsDialog">
@@ -54,19 +58,21 @@
 
         <div id="colorPicker">
           <h3>Team 1</h3>
-          <p>Color <input id="color1" type="color" /></p>
+          <label>Color</label> <input id="color1" type="color" />
           <h3>Team 2</h3>
-          <p>Color <input id="color2" type="color" /></p>
+          <label>Color</label> <input id="color2" type="color" />
         </div>
-		<h3>
-			Generate new stats
-			<div class="tooltip">
-			  <i class="fas fa-question-circle"></i
-			  ><span class="tooltiptext"
-				>An individual random value between Min and Max will be assigned to each player.</span
-			  >
-			</div>
-		  </h3>
+        <br />
+        <h3>
+          Generate new stats
+          <div class="tooltip">
+            <i class="fas fa-question-circle"></i
+            ><span class="tooltiptext"
+              >An individual random value between Min and Max will be assigned
+              to each player.</span
+            >
+          </div>
+        </h3>
         <form onSubmit="return false;" action="">
           <div class="formSection">
             <h4>Inaccuracy</h4>
