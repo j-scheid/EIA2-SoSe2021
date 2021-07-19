@@ -1,8 +1,8 @@
 var Final;
 (function (Final) {
     var Rectangle = /** @class */ (function () {
-        function Rectangle(_pos, _width, _height) {
-            this.position = _pos;
+        function Rectangle(_position, _width, _height) {
+            this.position = _position;
             this.width = _width;
             this.height = _height;
         }

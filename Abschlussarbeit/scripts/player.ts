@@ -94,6 +94,7 @@ namespace Final {
         this.moveTowards(this.origPosition);
       }
     }
+    
     public render(_ctx: CanvasRenderingContext2D, _game: Game): void {
       const color: string = this.team === 1 ? _game.team1Color : _game.team2Color;
 
