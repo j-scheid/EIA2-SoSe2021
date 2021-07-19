@@ -1,24 +1,27 @@
 namespace Final {
   export class Ball extends Movable {
-    radius: number;
-    vel: Vector = new Vector(0, 0);
+    public radius: number;
+    public vel: Vector = new Vector(0, 0);
 
-    constructor(radius: number, pos: Vector) {
-      super(pos, 0);
-      this.radius = radius;
+    public constructor(_radius: number, _pos: Vector) {
+      super(_pos, 0);
+      this.radius = _radius;
     }
 
-    init(game: Game): void { return null; }
+    public init(_game: Game): void {
+      return null;
+    }
 
-    update(_game: Game): void {
+    public update(_game: Game): void {
       this.position.add(this.vel);
       this.vel.scale(0.95);
     }
-    render(ctx: CanvasRenderingContext2D, game: Game): void {
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.fillStyle = "white";
-      ctx.arc(
+    
+    public render(_ctx: CanvasRenderingContext2D, _game: Game): void {
+      _ctx.beginPath();
+      _ctx.lineWidth = 2;
+      _ctx.fillStyle = "white";
+      _ctx.arc(
         this.position.x,
         this.position.y,
         this.radius,
@@ -26,7 +29,7 @@ namespace Final {
         2 * Math.PI,
         false
       );
-      ctx.fill();
+      _ctx.fill();
     }
   }
 }

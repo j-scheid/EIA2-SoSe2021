@@ -15,39 +15,15 @@ var Final;
 (function (Final) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        function Player(pos, playerNumber, speed, inaccuracy, team) {
-            var _this = _super.call(this, pos, speed) || this;
-            _this.origPosition = pos.copy();
-            _this.playerNumber = playerNumber;
-            _this.speed = speed;
-            _this.inaccuracy = inaccuracy;
-            _this.team = team;
+        function Player(_position, _playerNumber, _speed, _inaccuracy, _team) {
+            var _this = _super.call(this, _position, _speed) || this;
+            _this.origPosition = _position.copy();
+            _this.playerNumber = _playerNumber;
+            _this.speed = _speed;
+            _this.inaccuracy = _inaccuracy;
+            _this.team = _team;
             return _this;
         }
-        Object.defineProperty(Player, "SIZE", {
-            get: function () {
-                return 20;
-            },
-            enumerable: false,
-            configurable: true
-        });
-        Object.defineProperty(Player, "RADIUS", {
-            get: function () {
-                return (Final.canvas.width * (30 / 90)) / 2;
-            },
-            enumerable: false,
-            configurable: true
-        });
-        Player.prototype.shouldBeRunning = function (ball) {
-            return Final.Vector.getDistance(ball.position, this.position) <= Player.RADIUS;
-        };
-        Player.prototype.ballCollision = function (ball) {
-            var r = Player.SIZE + ball.radius;
-            return Final.Vector.getDistance(ball.position, this.position) <= r;
-        };
-        Player.prototype.mouseCollision = function () {
-            return Final.Vector.getDistance(Final.mouse, this.position) <= Player.SIZE;
-        };
         Player.prototype.init = function (_game) {
             var _this = this;
             document.addEventListener("click", function (e) {
@@ -74,71 +50,84 @@ var Final;
             var speedEl = document.getElementById("displaySpeed");
             speedEl.innerHTML = this.speed.toString();
         };
-        Player.prototype.update = function (game) {
+        Player.prototype.update = function (_game) {
             var _this = this;
-            if (this.ballCollision(game.ball)) {
-                game.activateShooting();
-                game.ballPosession =
+            if (this.ballCollision(_game.ball)) {
+                _game.activateShooting();
+                _game.ballPosession =
                     this.team === 1 ? -1 * this.playerNumber : this.playerNumber;
-                game.updateGameInfo();
+                _game.updateGameInfo();
                 var shootBall_1 = function () {
-                    var diff = Final.Vector.getDifference(Final.mouse, game.ball.position);
+                    var diff = Final.Vector.getDifference(Final.mouse, _game.ball.position);
                     var inaccuracy = Final.randomBetween(-0.25, 0.25) * _this.inaccuracy;
                     var angle = Math.atan2(diff.y, diff.x) + inaccuracy;
                     var vx = Math.cos(angle);
                     var vy = Math.sin(angle);
                     var vel = new Final.Vector(vx, vy).scale(15);
-                    game.ball.vel = vel.copy();
+                    _game.ball.vel = vel.copy();
                     // ensure ball is outside of player
-                    while (_this.ballCollision(game.ball)) {
-                        game.ball.position.add(vel);
+                    while (_this.ballCollision(_game.ball)) {
+                        _game.ball.position.add(vel);
                     }
-                    game.state = Final.GameState.RUNNING;
+                    _game.state = Final.GameState.RUNNING;
                     Final.canvas.removeEventListener("click", shootBall_1);
                 };
                 Final.canvas.addEventListener("click", shootBall_1);
                 return;
             }
             // check for collision with ball
-            if (this.shouldBeRunning(game.ball)) {
-                this.moveTowards(game.ball.position);
+            if (this.shouldBeRunning(_game.ball)) {
+                this.moveTowards(_game.ball.position);
             }
             else {
                 this.moveTowards(this.origPosition);
             }
         };
-        Player.prototype.render = function (ctx, game) {
-            var color = this.team === 1 ? game.team1Color : game.team2Color;
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.fillStyle = color;
-            ctx.arc(this.position.x, this.position.y, Player.SIZE, 0, 2 * Math.PI, false);
-            ctx.fill();
-            ctx.fillStyle = "black";
-            ctx.font = "27px Arial";
+        Player.prototype.render = function (_ctx, _game) {
+            var color = this.team === 1 ? _game.team1Color : _game.team2Color;
+            _ctx.beginPath();
+            _ctx.lineWidth = 2;
+            _ctx.fillStyle = color;
+            _ctx.arc(this.position.x, this.position.y, 20, //20 = Player size
+            0, 2 * Math.PI, false);
+            _ctx.fill();
+            _ctx.fillStyle = "black";
+            _ctx.font = "27px Arial";
             var digits = this.playerNumber.toString().length;
-            ctx.fillText(this.playerNumber.toString(), this.position.x - 8 * digits, this.position.y + 10);
-            var selectedPlayer = game.getSelectedPlayer();
+            _ctx.fillText(this.playerNumber.toString(), this.position.x - 8 * digits, this.position.y + 10);
+            var selectedPlayer = _game.getSelectedPlayer();
             if (selectedPlayer) {
                 var isSelected = this.equals(selectedPlayer);
                 if (isSelected) {
-                    ctx.beginPath();
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = "yellow";
-                    ctx.arc(this.position.x, this.position.y, Player.SIZE, 0, 2 * Math.PI, false);
-                    ctx.stroke();
+                    _ctx.beginPath();
+                    _ctx.lineWidth = 2;
+                    _ctx.strokeStyle = "yellow";
+                    _ctx.arc(this.position.x, this.position.y, 20, //20 = Player size
+                    0, 2 * Math.PI, false);
+                    _ctx.stroke();
                 }
             }
             if (Final.DEBUG) {
-                ctx.beginPath();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = "red";
-                ctx.arc(this.position.x, this.position.y, Player.RADIUS, 0, 2 * Math.PI, false);
-                ctx.stroke();
+                _ctx.beginPath();
+                _ctx.lineWidth = 2;
+                _ctx.strokeStyle = "red";
+                _ctx.arc(this.position.x, this.position.y, (Final.canvas.width * (30 / 90)) / 2, //Radius
+                0, 2 * Math.PI, false);
+                _ctx.stroke();
             }
         };
-        Player.prototype.equals = function (other) {
-            return (other.playerNumber === this.playerNumber && other.team === this.team);
+        Player.prototype.shouldBeRunning = function (_ball) {
+            return Final.Vector.getDistance(_ball.position, this.position) <= (Final.canvas.width * (30 / 90)) / 2;
+        };
+        Player.prototype.ballCollision = function (_ball) {
+            var r = 20 + _ball.radius; //20 = Player size
+            return Final.Vector.getDistance(_ball.position, this.position) <= r;
+        };
+        Player.prototype.mouseCollision = function () {
+            return Final.Vector.getDistance(Final.mouse, this.position) <= 20; //20 = Player size
+        };
+        Player.prototype.equals = function (_other) {
+            return (_other.playerNumber === this.playerNumber && _other.team === this.team);
         };
         return Player;
     }(Final.Movable));

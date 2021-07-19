@@ -1,13 +1,13 @@
 namespace Final {
   export class Rectangle {
-    position: Vector;
-    width: number;
-    height: number;
+    public position: Vector;
+    public width: number;
+    public height: number;
 
-    constructor(pos: Vector, width: number, height: number) {
-      this.position = pos;
-      this.width = width;
-      this.height = height;
+    public constructor(_pos: Vector, _width: number, _height: number) {
+      this.position = _pos;
+      this.width = _width;
+      this.height = _height;
     }
   }
 }

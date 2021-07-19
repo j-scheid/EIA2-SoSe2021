@@ -1,25 +1,25 @@
 namespace Final {
   export class Game {
-    field: Field;
-    ball: Ball;
-    entities: Movable[];
+    public ball: Ball;
+    public team1Color: string;
+    public team2Color: string;
 
-    team1Color: string;
-    team2Color: string;
+    public scoreTeam1: number = 0;
+    public scoreTeam2: number = 0;
+    public ballPosession?: number; // player number (negative => t1, positiv => t2)
 
-    scoreTeam1: number = 0;
-    scoreTeam2: number = 0;
-    ballPosession?: number; // player number (negative => t1, positiv => t2)
+    public state: GameState = GameState.RUNNING;
 
-    state: GameState = GameState.RUNNING;
+    private movables: Movable[];
+    private field: Field;
 
-    constructor() {
+    public constructor() {
       this.field = new Field(canvas.width, canvas.height);
       this.ball = new Ball(
         15,
         new Vector(this.field.width / 2 - 70, this.field.height / 2 - 70)
       );
-      this.entities = [];
+      this.movables = [];
 
       this.team1Color = "#F38A5E";
       this.team2Color = "#5194E1";
@@ -29,11 +29,82 @@ namespace Final {
       this.initArrowKeys();
     }
 
-    getPlayers(): Player[] {
-      return this.entities.filter((e) => e instanceof Player) as Player[];
+    public updateGameInfo(): void {
+      const scoreDisplay: HTMLElement = document.getElementById("displayScore");
+      scoreDisplay.innerHTML = `${this.scoreTeam1} : ${this.scoreTeam2}`;
+
+      if (this.ballPosession === undefined) return;
+      const posessionDisplay: HTMLElement =
+        document.getElementById("displayPosession");
+      const team: Team = this.ballPosession < 0 ? 1 : 2;
+      posessionDisplay.innerHTML = `${Math.abs(this.ballPosession)} (T${team})`;
     }
 
-    initArrowKeys(): void {
+    public resetBall(_team?: number): void {
+      if (this.ballPosession === undefined) return;
+
+      if (!_team) {
+        _team = this.ballPosession < 0 ? 1 : 2;
+      }
+      const players: Player[] = this.getPlayers().filter(
+        (player) => player.team !== _team
+      ) as Player[];
+      const idx: number = Math.floor(randomBetween(0, players.length));
+      const player: Player = players[idx];
+      this.ball.position = player.position.copy();
+    }
+
+    public activateShooting(): void {
+      this.state = GameState.SHOOTING;
+    }
+
+    public update(): void {
+      if (this.state === GameState.RUNNING) {
+        this.field.update(this);
+        this.ball.update(this);
+        this.movables.forEach((e) => e.update(this));
+      }
+    }
+
+    public render(_ctx: CanvasRenderingContext2D): void {
+      this.field.render(_ctx, this);
+      this.movables.forEach((e) => e.render(_ctx, this));
+      this.ball.render(_ctx, this);
+
+      if (this.state === GameState.SHOOTING) {
+        _ctx.strokeStyle = "red";
+        _ctx.beginPath();
+        _ctx.lineWidth = 3;
+        _ctx.arc(mouse.x, mouse.y, this.ball.radius, 0, 2 * Math.PI, false);
+        _ctx.stroke();
+      } else if (this.state === GameState.ADD_PLAYER) {
+        _ctx.strokeStyle = "green";
+        _ctx.beginPath();
+        _ctx.lineWidth = 3;
+        _ctx.arc(mouse.x, mouse.y, this.ball.radius, 0, 2 * Math.PI, false);
+        _ctx.stroke();
+      }
+    }
+
+    public getSelectedPlayer(): Player | undefined {
+      const selectedPlayerEl: HTMLElement = document.getElementById("selectedPlayer");
+      if (!selectedPlayerEl) return;
+      const selectedPlayer: number = parseInt(selectedPlayerEl.innerHTML);
+
+      const team: number = selectedPlayer < 0 ? 1 : 2;
+      return this.movables
+        .filter((e) => e instanceof Player)
+        .filter((e) => (e as Player).team === team)
+        .find(
+          (e) => (e as Player).playerNumber === Math.abs(selectedPlayer)
+        ) as Player;
+    }
+
+    private getPlayers(): Player[] {
+      return this.movables.filter((e) => e instanceof Player) as Player[];
+    }
+
+    private initArrowKeys(): void {
       document.addEventListener("keydown", (event) => {
         const selectedPlayer: Player = this.getSelectedPlayer();
         const index: number = selectedPlayer
@@ -54,7 +125,7 @@ namespace Final {
       });
     }
 
-    initSoccer(): void {
+    private initSoccer(): void {
       // PLAYER
       let counter: number = 1;
       for (let row: number = 0; row < 6; row++) {
@@ -75,7 +146,7 @@ namespace Final {
               inaccuracy,
               team
             );
-            this.entities.push(player);
+            this.movables.push(player);
 
             counter += 1;
           }
@@ -96,7 +167,7 @@ namespace Final {
               inaccuracy,
               team
             );
-            this.entities.push(player);
+            this.movables.push(player);
 
             counter += 1;
           }
@@ -106,11 +177,11 @@ namespace Final {
       // REFEREE
       const referee: Referee = new Referee(
         new Vector(
-          this.field.width / 2 - Referee.SIZE / 2,
-          this.field.height / 2 - Referee.SIZE / 2
+          this.field.width / 2 - 10,
+          this.field.height / 2 - 10
         )
       );
-      this.entities.push(referee);
+      this.movables.push(referee);
 
       // LINESMEN
       const linesman1: Linesman = new Linesman(
@@ -119,13 +190,13 @@ namespace Final {
       const linesman2: Linesman = new Linesman(
         new Vector(this.field.width, this.ball.position.y)
       );
-      this.entities.push(linesman1);
-      this.entities.push(linesman2);
+      this.movables.push(linesman1);
+      this.movables.push(linesman2);
 
-      this.entities.forEach((e) => e.init(this));
+      this.movables.forEach((e) => e.init(this));
     }
 
-    getInaccuracyFromSettings(): number {
+    private getInaccuracyFromSettings(): number {
       const minInaccuracy: number =
         parseInt(
           (document.getElementById("minInaccuracy") as HTMLInputElement).value
@@ -138,21 +209,7 @@ namespace Final {
       return randomBetween(minInaccuracy, maxInaccuracy);
     }
 
-    getSelectedPlayer(): Player | undefined {
-      const selectedPlayerEl: HTMLElement = document.getElementById("selectedPlayer");
-      if (!selectedPlayerEl) return;
-      const selectedPlayer: number = parseInt(selectedPlayerEl.innerHTML);
-
-      const team: number = selectedPlayer < 0 ? 1 : 2;
-      return this.entities
-        .filter((e) => e instanceof Player)
-        .filter((e) => (e as Player).team === team)
-        .find(
-          (e) => (e as Player).playerNumber === Math.abs(selectedPlayer)
-        ) as Player;
-    }
-
-    getSpeedFromSettings(): number {
+    private getSpeedFromSettings(): number {
       const minSpeed: number = parseInt(
         (document.getElementById("minSpeed") as HTMLInputElement).value
       );
@@ -163,7 +220,7 @@ namespace Final {
       return Math.floor(randomBetween(minSpeed, maxSpeed + 1));
     }
 
-    initGUI(): void {
+    private initGUI(): void {
       // COLOR PICKER
       const picker1: HTMLInputElement = document.getElementById(
         "color1"
@@ -183,7 +240,7 @@ namespace Final {
       // PLAYER ATTRIBUTES
       const form: HTMLElement = document.querySelector("#settingsDialog form");
       form.addEventListener("submit", () => {
-        this.entities
+        this.movables
           .filter((e) => e instanceof Player)
           .forEach((e) => {
             const player: Player = e as Player;
@@ -197,8 +254,8 @@ namespace Final {
       removeBtn.addEventListener("click", (e) => {
         const selectedPlayer: Player | undefined = this.getSelectedPlayer();
         if (!selectedPlayer) return;
-        const idx: number = this.entities.indexOf(selectedPlayer);
-        this.entities.splice(idx, 1);
+        const idx: number = this.movables.indexOf(selectedPlayer);
+        this.movables.splice(idx, 1);
       });
 
       // PLAYER ADDING
@@ -212,7 +269,7 @@ namespace Final {
           let playerNumber: number;
           while (true) {
             playerNumber = Math.floor(
-              randomBetween(0, this.entities.length + 1)
+              randomBetween(0, this.movables.length + 1)
             );
 
             const existing: Player | undefined = this.getPlayers().find(
@@ -229,7 +286,7 @@ namespace Final {
             inaccuracy,
             team
           );
-          this.entities.push(newPlayer);
+          this.movables.push(newPlayer);
 
           this.state = GameState.RUNNING;
 
@@ -237,64 +294,6 @@ namespace Final {
         };
         canvas.addEventListener("click", addPlayer);
       });
-    }
-
-    updateGameInfo(): void {
-      const scoreDisplay: HTMLElement = document.getElementById("displayScore");
-      scoreDisplay.innerHTML = `${this.scoreTeam1} : ${this.scoreTeam2}`;
-
-      if (this.ballPosession === undefined) return;
-      const posessionDisplay: HTMLElement =
-        document.getElementById("displayPosession");
-      const team: Team = this.ballPosession < 0 ? 1 : 2;
-      posessionDisplay.innerHTML = `${Math.abs(this.ballPosession)} (T${team})`;
-    }
-
-    resetBall(team?: number): void {
-      if (this.ballPosession === undefined) return;
-
-      if (!team) {
-        team = this.ballPosession < 0 ? 1 : 2;
-      }
-      const players: Player[] = this.getPlayers().filter(
-        (player) => player.team !== team
-      ) as Player[];
-      const idx: number = Math.floor(randomBetween(0, players.length));
-      const player: Player = players[idx];
-      this.ball.position = player.position.copy();
-    }
-
-    activateShooting(): void {
-      this.state = GameState.SHOOTING;
-    }
-
-    update(): void {
-      if (this.state === GameState.RUNNING) {
-        this.field.update(this);
-        this.ball.update(this);
-        this.entities.forEach((e) => e.update(this));
-      } else if (this.state === GameState.SHOOTING) {
-        //
-      }
-    }
-    render(ctx: CanvasRenderingContext2D): void {
-      this.field.render(ctx, this);
-      this.entities.forEach((e) => e.render(ctx, this));
-      this.ball.render(ctx, this);
-
-      if (this.state === GameState.SHOOTING) {
-        ctx.strokeStyle = "red";
-        ctx.beginPath();
-        ctx.lineWidth = 3;
-        ctx.arc(mouse.x, mouse.y, this.ball.radius, 0, 2 * Math.PI, false);
-        ctx.stroke();
-      } else if (this.state === GameState.ADD_PLAYER) {
-        ctx.strokeStyle = "green";
-        ctx.beginPath();
-        ctx.lineWidth = 3;
-        ctx.arc(mouse.x, mouse.y, this.ball.radius, 0, 2 * Math.PI, false);
-        ctx.stroke();
-      }
     }
   }
 }

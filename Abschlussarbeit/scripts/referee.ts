@@ -1,68 +1,63 @@
 namespace Final {
   export class Referee extends Movable {
-    constructor(pos: Vector) {
-      super(pos, 4);
+    public constructor(_pos: Vector) {
+      super(_pos, 4);
     }
 
-    static get SIZE(): number {
-      return 20;
-    }
-    static get RADIUS(): number {
-      return (canvas.width * (60 / 90)) / 2;
-    }
+    public init(_game: Game): void { return null; }
 
-    shouldBeRunning(ball: Ball): boolean {
-      return Vector.getDistance(ball.position, this.position) > Referee.RADIUS;
-    }
-
-    init(game: Game): void { return null; }
-
-    update(game: Game): void {
-      if (this.shouldBeRunning(game.ball)) {
-        this.moveTowards(game.ball.position);
+    public update(_game: Game): void {
+      if (this.shouldBeRunning(_game.ball)) {
+        this.moveTowards(_game.ball.position);
       }
     }
-    render(ctx: CanvasRenderingContext2D, game: Game): void {
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.fillStyle = "#23231f";
-      ctx.arc(
-        this.position.x,
-        this.position.y,
-        Referee.SIZE,
-        0,
-        2 * Math.PI,
-        false
-      );
-      ctx.fill();
 
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.fillStyle = "#efef15";
-      ctx.arc(
+    public render(_ctx: CanvasRenderingContext2D, _game: Game): void {
+      _ctx.beginPath();
+      _ctx.lineWidth = 2;
+      _ctx.fillStyle = "#23231f";
+      _ctx.arc(
         this.position.x,
         this.position.y,
-        Referee.SIZE / 2,
+        20,
         0,
         2 * Math.PI,
         false
       );
-      ctx.fill();
+      _ctx.fill();
+
+      _ctx.beginPath();
+      _ctx.lineWidth = 2;
+      _ctx.fillStyle = "#efef15";
+      _ctx.arc(
+        this.position.x,
+        this.position.y,
+        10,
+        0,
+        2 * Math.PI,
+        false
+      );
+      _ctx.fill();
 
       if (DEBUG) {
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "pink";
-        ctx.arc(
+        _ctx.beginPath();
+        _ctx.lineWidth = 2;
+        _ctx.strokeStyle = "pink";
+        _ctx.arc(
           this.position.x,
           this.position.y,
-          Referee.RADIUS,
+          (canvas.width * (60 / 90)) / 2, //radius
           0,
           2 * Math.PI,
           false
         );
-        ctx.stroke();
+        _ctx.stroke();
       }
     }
+
+    private shouldBeRunning(_ball: Ball): boolean {
+      return Vector.getDistance(_ball.position, this.position) > (canvas.width * (60 / 90)) / 2; //smaller than Referee Radius
+    }
+    
   }
 }

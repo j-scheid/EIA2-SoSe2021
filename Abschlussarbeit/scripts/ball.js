@@ -15,23 +15,25 @@ var Final;
 (function (Final) {
     var Ball = /** @class */ (function (_super) {
         __extends(Ball, _super);
-        function Ball(radius, pos) {
-            var _this = _super.call(this, pos, 0) || this;
+        function Ball(_radius, _pos) {
+            var _this = _super.call(this, _pos, 0) || this;
             _this.vel = new Final.Vector(0, 0);
-            _this.radius = radius;
+            _this.radius = _radius;
             return _this;
         }
-        Ball.prototype.init = function (game) { return null; };
+        Ball.prototype.init = function (_game) {
+            return null;
+        };
         Ball.prototype.update = function (_game) {
             this.position.add(this.vel);
             this.vel.scale(0.95);
         };
-        Ball.prototype.render = function (ctx, game) {
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.fillStyle = "white";
-            ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false);
-            ctx.fill();
+        Ball.prototype.render = function (_ctx, _game) {
+            _ctx.beginPath();
+            _ctx.lineWidth = 2;
+            _ctx.fillStyle = "white";
+            _ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false);
+            _ctx.fill();
         };
         return Ball;
     }(Final.Movable));

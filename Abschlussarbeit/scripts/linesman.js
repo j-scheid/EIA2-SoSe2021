@@ -15,38 +15,31 @@ var Final;
 (function (Final) {
     var Linesman = /** @class */ (function (_super) {
         __extends(Linesman, _super);
-        function Linesman(pos) {
-            return _super.call(this, pos, 5) || this;
+        function Linesman(_pos) {
+            return _super.call(this, _pos, 5) || this;
         }
-        Object.defineProperty(Linesman, "SIZE", {
-            get: function () {
-                return 20;
-            },
-            enumerable: false,
-            configurable: true
-        });
-        Linesman.prototype.init = function (game) {
+        Linesman.prototype.init = function (_game) {
             return null;
         };
-        Linesman.prototype.update = function (game) {
-            if (game.ball.position.y < this.position.y) {
+        Linesman.prototype.update = function (_game) {
+            if (_game.ball.position.y < this.position.y) {
                 this.position.y -= this.speed;
             }
-            else if (game.ball.position.y > this.position.y) {
+            else if (_game.ball.position.y > this.position.y) {
                 this.position.y += this.speed;
             }
         };
-        Linesman.prototype.render = function (ctx, game) {
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.fillStyle = "#353535";
-            ctx.arc(this.position.x, this.position.y, Linesman.SIZE, 0, 2 * Math.PI, false);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.fillStyle = "#a0e5da";
-            ctx.arc(this.position.x, this.position.y, Linesman.SIZE / 2, 0, 2 * Math.PI, false);
-            ctx.fill();
+        Linesman.prototype.render = function (_ctx, _game) {
+            _ctx.beginPath();
+            _ctx.lineWidth = 2;
+            _ctx.fillStyle = "#353535";
+            _ctx.arc(this.position.x, this.position.y, 20, 0, 2 * Math.PI, false);
+            _ctx.fill();
+            _ctx.beginPath();
+            _ctx.lineWidth = 2;
+            _ctx.fillStyle = "#a0e5da";
+            _ctx.arc(this.position.x, this.position.y, 10, 0, 2 * Math.PI, false);
+            _ctx.fill();
         };
         return Linesman;
     }(Final.Movable));

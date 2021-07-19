@@ -3,7 +3,8 @@ Aufgabe: Abschlussaufgabe S21
 Name: Jonas Scheid
 Matrikel: 267316
 Datum: 19.07.2021
-Quellen: EIAsteroids
+Quellen: EIAsteroids, https://www.w3schools.com/
+Gruppe mit Maximilian Tabori
 */
 var Final;
 (function (Final) {
@@ -33,10 +34,6 @@ var Final;
         Final.canvas.addEventListener("mousemove", function (e) {
             Final.mouse.set(e.pageX - Final.canvas.offsetLeft, e.pageY - Final.canvas.offsetTop);
         });
-        //Popup
-        /*let popup: HTMLElement = document.querySelector("#startPopup");
-        const closePopUp: HTMLElement = document.querySelector("#closePopup");
-        closePopUp.addEventListener("click", togglePopup(popup));*/
         game = new Final.Game();
         loop();
     }
@@ -46,7 +43,4 @@ var Final;
         window.requestAnimationFrame(loop);
     }
     window.onload = init;
-    function togglePopup(_popup) {
-        _popup.classList.toggle("show");
-    }
 })(Final || (Final = {}));

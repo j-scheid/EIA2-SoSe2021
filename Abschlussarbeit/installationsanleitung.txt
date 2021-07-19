@@ -1,0 +1,13 @@
+INSTALLATION Abschlussarbeit EIA2
+=================================
+Um die Anwendung korrekt laufen zu lassen, müssen folgende Schritte abgeschlossen werden:
+1. Zip-Ordner in den gewünschten Installationsordner verschieben
+2. Zip-Ordner entpacken (z.B: mit WinRAR oder 7Zip)
+3. index.html öffnen:
+   --> Rechtsklick auf die Datei 
+   --> "Öffnen mit"
+   --> Google Chrome oder Brave (andere Browser sind auch unterstützt, allerdings laufen die Bewegungen auf Chromium-basierten Browsern am flüssigsten)
+4. F11 startet den Fullscreen-Modus
+5. Die Anwendung kann regulär wie ein Browserfenster geschlossen werden
+
+Diese Installationsnotiz und eine Spielanleitung sind zusätzlich im PDF des Zip-Ordners enthalten.

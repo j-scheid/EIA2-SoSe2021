@@ -15,50 +15,37 @@ var Final;
 (function (Final) {
     var Referee = /** @class */ (function (_super) {
         __extends(Referee, _super);
-        function Referee(pos) {
-            return _super.call(this, pos, 4) || this;
+        function Referee(_pos) {
+            return _super.call(this, _pos, 4) || this;
         }
-        Object.defineProperty(Referee, "SIZE", {
-            get: function () {
-                return 20;
-            },
-            enumerable: false,
-            configurable: true
-        });
-        Object.defineProperty(Referee, "RADIUS", {
-            get: function () {
-                return (Final.canvas.width * (60 / 90)) / 2;
-            },
-            enumerable: false,
-            configurable: true
-        });
-        Referee.prototype.shouldBeRunning = function (ball) {
-            return Final.Vector.getDistance(ball.position, this.position) > Referee.RADIUS;
-        };
-        Referee.prototype.init = function (game) { return null; };
-        Referee.prototype.update = function (game) {
-            if (this.shouldBeRunning(game.ball)) {
-                this.moveTowards(game.ball.position);
+        Referee.prototype.init = function (_game) { return null; };
+        Referee.prototype.update = function (_game) {
+            if (this.shouldBeRunning(_game.ball)) {
+                this.moveTowards(_game.ball.position);
             }
         };
-        Referee.prototype.render = function (ctx, game) {
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.fillStyle = "#23231f";
-            ctx.arc(this.position.x, this.position.y, Referee.SIZE, 0, 2 * Math.PI, false);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.fillStyle = "#efef15";
-            ctx.arc(this.position.x, this.position.y, Referee.SIZE / 2, 0, 2 * Math.PI, false);
-            ctx.fill();
+        Referee.prototype.render = function (_ctx, _game) {
+            _ctx.beginPath();
+            _ctx.lineWidth = 2;
+            _ctx.fillStyle = "#23231f";
+            _ctx.arc(this.position.x, this.position.y, 20, 0, 2 * Math.PI, false);
+            _ctx.fill();
+            _ctx.beginPath();
+            _ctx.lineWidth = 2;
+            _ctx.fillStyle = "#efef15";
+            _ctx.arc(this.position.x, this.position.y, 10, 0, 2 * Math.PI, false);
+            _ctx.fill();
             if (Final.DEBUG) {
-                ctx.beginPath();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = "pink";
-                ctx.arc(this.position.x, this.position.y, Referee.RADIUS, 0, 2 * Math.PI, false);
-                ctx.stroke();
+                _ctx.beginPath();
+                _ctx.lineWidth = 2;
+                _ctx.strokeStyle = "pink";
+                _ctx.arc(this.position.x, this.position.y, (Final.canvas.width * (60 / 90)) / 2, //radius
+                0, 2 * Math.PI, false);
+                _ctx.stroke();
             }
+        };
+        Referee.prototype.shouldBeRunning = function (_ball) {
+            return Final.Vector.getDistance(_ball.position, this.position) > (Final.canvas.width * (60 / 90)) / 2; //smaller than Referee Radius
         };
         return Referee;
     }(Final.Movable));

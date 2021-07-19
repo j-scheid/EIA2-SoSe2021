@@ -1,16 +1,16 @@
 namespace Final {
   export class Field {
-    width: number;
-    height: number;
+    public width: number;
+    public height: number;
 
-    goalTeam1: Rectangle;
-    goalTeam2: Rectangle;
-    penaltyTeam1: Rectangle;
-    penaltyTeam2: Rectangle;
+    private goalTeam1: Rectangle;
+    private goalTeam2: Rectangle;
+    private penaltyTeam1: Rectangle;
+    private penaltyTeam2: Rectangle;
 
-    constructor(width: number, height: number) {
-      this.width = width;
-      this.height = height;
+    public constructor(_width: number, _height: number) {
+      this.width = _width;
+      this.height = _height;
 
       const goalWidth: number = 200;
       const goalHeight: number = 5;
@@ -42,97 +42,61 @@ namespace Final {
       );
     }
 
-    update(game: Game): void {
+    public update(_game: Game): void {
       // Sounds from https://www.freesoundslibrary.com/
       const cheer: HTMLAudioElement = new Audio("assets/Crowd-booing.mp3");
       const boo: HTMLAudioElement = new Audio("assets/aww-sound-effect.mp3");
 
-      if (this.checkGoal1(game.ball)) {
-        game.scoreTeam2 += 1;
-        game.updateGameInfo();
-        game.resetBall(2);
+      if (this.checkGoal1(_game.ball)) {
+        _game.scoreTeam2 += 1;
+        _game.updateGameInfo();
+        _game.resetBall(2);
         cheer.play();
-      } else if (this.checkGoal2(game.ball)) {
-        game.scoreTeam1 += 1;
-        game.updateGameInfo();
-        game.resetBall(1);
+      } else if (this.checkGoal2(_game.ball)) {
+        _game.scoreTeam1 += 1;
+        _game.updateGameInfo();
+        _game.resetBall(1);
         cheer.play();
       }
 
-      if (this.outOfPlay(game)) {
-        game.resetBall();
+      if (this.outOfPlay(_game)) {
+        _game.resetBall();
         boo.play();
       }
     }
 
-    outOfPlay(game: Game): boolean {
-      const fieldRect: Rectangle = new Rectangle(
-        new Vector(0, 0),
-        this.width,
-        this.height
-      );
-      return !this.checkRectangleBallCollision(game.ball, fieldRect);
-    }
-
-    checkRectangleBallCollision(ball: Ball, rect: Rectangle): boolean {
-      var distX: number = Math.abs(
-        ball.position.x - rect.position.x - rect.width / 2
-      );
-      var distY: number = Math.abs(
-        ball.position.y - rect.position.y - rect.height / 2
-      );
-
-      if (distX > rect.width / 2 + ball.radius) return false;
-      if (distY > rect.height / 2 + ball.radius) return false;
-
-      if (distX <= rect.width / 2) return true;
-      if (distY <= rect.height / 2) return true;
-
-      var dx: number = distX - rect.width / 2;
-      var dy: number = distY - rect.height / 2;
-
-      return dx * dx + dy * dy <= ball.radius * ball.radius;
-    }
-
-    checkGoal1(ball: Ball): boolean {
-      return this.checkRectangleBallCollision(ball, this.goalTeam1);
-    }
-    checkGoal2(ball: Ball): boolean {
-      return this.checkRectangleBallCollision(ball, this.goalTeam2);
-    }
-
-    render(ctx: CanvasRenderingContext2D, game: Game): void {
+    public render(_ctx: CanvasRenderingContext2D, _game: Game): void {
       // middle line
-      ctx.strokeStyle = "white";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(0, this.height / 2);
-      ctx.lineTo(this.width, this.height / 2);
-      ctx.stroke();
+      _ctx.strokeStyle = "white";
+      _ctx.lineWidth = 2;
+      _ctx.beginPath();
+      _ctx.moveTo(0, this.height / 2);
+      _ctx.lineTo(this.width, this.height / 2);
+      _ctx.stroke();
 
       // border
-      ctx.strokeStyle = "white";
-      ctx.lineWidth = 4;
-      ctx.strokeRect(0, 0, this.width, this.height);
+      _ctx.strokeStyle = "white";
+      _ctx.lineWidth = 4;
+      _ctx.strokeRect(0, 0, this.width, this.height);
 
       // middle circle
-      ctx.strokeStyle = "white";
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.arc(this.width / 2, this.height / 2, 100, 0, 2 * Math.PI, false);
-      ctx.stroke();
+      _ctx.strokeStyle = "white";
+      _ctx.beginPath();
+      _ctx.lineWidth = 2;
+      _ctx.arc(this.width / 2, this.height / 2, 100, 0, 2 * Math.PI, false);
+      _ctx.stroke();
 
       // goals
-      ctx.strokeStyle = game.team1Color;
-      ctx.lineWidth = 5;
-      ctx.strokeRect(
+      _ctx.strokeStyle = _game.team1Color;
+      _ctx.lineWidth = 5;
+      _ctx.strokeRect(
         this.goalTeam1.position.x,
         this.goalTeam1.position.y,
         this.goalTeam1.width,
         this.goalTeam1.height
       );
-      ctx.strokeStyle = game.team2Color;
-      ctx.strokeRect(
+      _ctx.strokeStyle = _game.team2Color;
+      _ctx.strokeRect(
         this.goalTeam2.position.x,
         this.goalTeam2.position.y,
         this.goalTeam2.width,
@@ -140,21 +104,57 @@ namespace Final {
       );
 
       // penalty area
-      ctx.strokeStyle = "white";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(
+      _ctx.strokeStyle = "white";
+      _ctx.lineWidth = 2;
+      _ctx.strokeRect(
         this.penaltyTeam1.position.x,
         this.penaltyTeam1.position.y,
         this.penaltyTeam1.width,
         this.penaltyTeam1.height
       );
-      ctx.strokeStyle = "white";
-      ctx.strokeRect(
+      _ctx.strokeStyle = "white";
+      _ctx.strokeRect(
         this.penaltyTeam2.position.x,
         this.penaltyTeam2.position.y,
         this.penaltyTeam2.width,
         this.penaltyTeam2.height
       );
+    }
+
+    private outOfPlay(_game: Game): boolean {
+      const fieldRect: Rectangle = new Rectangle(
+        new Vector(0, 0),
+        this.width,
+        this.height
+      );
+      return !this.checkRectangleBallCollision(_game.ball, fieldRect);
+    }
+
+    private checkRectangleBallCollision(_ball: Ball, _rect: Rectangle): boolean {
+      var distX: number = Math.abs(
+        _ball.position.x - _rect.position.x - _rect.width / 2
+      );
+      var distY: number = Math.abs(
+        _ball.position.y - _rect.position.y - _rect.height / 2
+      );
+
+      if (distX > _rect.width / 2 + _ball.radius) return false;
+      if (distY > _rect.height / 2 + _ball.radius) return false;
+
+      if (distX <= _rect.width / 2) return true;
+      if (distY <= _rect.height / 2) return true;
+
+      var dx: number = distX - _rect.width / 2;
+      var dy: number = distY - _rect.height / 2;
+
+      return dx * dx + dy * dy <= _ball.radius * _ball.radius;
+    }
+
+    private checkGoal1(_ball: Ball): boolean {
+      return this.checkRectangleBallCollision(_ball, this.goalTeam1);
+    }
+    private checkGoal2(_ball: Ball): boolean {
+      return this.checkRectangleBallCollision(_ball, this.goalTeam2);
     }
   }
 }

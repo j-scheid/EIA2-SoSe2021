@@ -1,9 +1,9 @@
 var Final;
 (function (Final) {
     var Movable = /** @class */ (function () {
-        function Movable(pos, speed) {
-            this.position = pos.copy();
-            this.speed = speed;
+        function Movable(_position, _speed) {
+            this.position = _position.copy();
+            this.speed = _speed;
         }
         Movable.prototype.moveTowards = function (target, variableAngle) {
             var diff = Final.Vector.getDifference(target, this.position);

@@ -1,20 +1,20 @@
 namespace Final {
   export abstract class Movable {
-    position: Vector;
-    speed: number;
+    public position: Vector;
+    public speed: number;
 
-    constructor(pos: Vector, speed: number) {
-      this.position = pos.copy();
-      this.speed = speed;
+    protected constructor(_position: Vector, _speed: number) {
+      this.position = _position.copy();
+      this.speed = _speed;
     }
 
-    abstract init(game: Game): void;
+    public abstract init(_game: Game): void;
 
-    abstract update(game: Game): void;
+    public abstract update(_game: Game): void;
 
-    abstract render(ctx: CanvasRenderingContext2D, game: Game): void;
+    public abstract render(_ctx: CanvasRenderingContext2D, _game: Game): void;
 
-    moveTowards(target: Vector, variableAngle?: number): void {
+    public moveTowards(target: Vector, variableAngle?: number): void {
       const diff: Vector = Vector.getDifference(target, this.position);
 
       const angle: number = Math.atan2(diff.y, diff.x) + (variableAngle || 0);
