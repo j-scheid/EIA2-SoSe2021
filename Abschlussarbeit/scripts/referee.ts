@@ -4,7 +4,9 @@ namespace Final {
       super(_pos, 4);
     }
 
-    public init(_game: Game): void { return null; }
+    public init(_game: Game): void {
+      return null;
+    }
 
     public update(_game: Game): void {
       if (this.shouldBeRunning(_game.ball)) {
@@ -16,27 +18,13 @@ namespace Final {
       _ctx.beginPath();
       _ctx.lineWidth = 2;
       _ctx.fillStyle = "#23231f";
-      _ctx.arc(
-        this.position.x,
-        this.position.y,
-        20,
-        0,
-        2 * Math.PI,
-        false
-      );
+      _ctx.arc(this.position.x, this.position.y, 20, 0, 2 * Math.PI, false);
       _ctx.fill();
 
       _ctx.beginPath();
       _ctx.lineWidth = 2;
       _ctx.fillStyle = "#efef15";
-      _ctx.arc(
-        this.position.x,
-        this.position.y,
-        10,
-        0,
-        2 * Math.PI,
-        false
-      );
+      _ctx.arc(this.position.x, this.position.y, 10, 0, 2 * Math.PI, false);
       _ctx.fill();
 
       if (DEBUG) {
@@ -56,8 +44,10 @@ namespace Final {
     }
 
     private shouldBeRunning(_ball: Ball): boolean {
-      return Vector.getDistance(_ball.position, this.position) > (canvas.width * (60 / 90)) / 2; //smaller than Referee Radius
+      return (
+        Vector.getDistance(_ball.position, this.position) >
+        (canvas.width * (60 / 90)) / 2
+      ); //smaller than Referee Radius
     }
-    
   }
 }

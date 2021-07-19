@@ -128,7 +128,11 @@ form button[type="submit"] {
   visibility: visible;
 }
 
-p, h4, h3, h2, label {
+p,
+h4,
+h3,
+h2,
+label {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;

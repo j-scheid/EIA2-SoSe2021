@@ -117,7 +117,8 @@ var Final;
             }
         };
         Player.prototype.shouldBeRunning = function (_ball) {
-            return Final.Vector.getDistance(_ball.position, this.position) <= (Final.canvas.width * (30 / 90)) / 2;
+            return (Final.Vector.getDistance(_ball.position, this.position) <=
+                (Final.canvas.width * (30 / 90)) / 2);
         };
         Player.prototype.ballCollision = function (_ball) {
             var r = 20 + _ball.radius; //20 = Player size

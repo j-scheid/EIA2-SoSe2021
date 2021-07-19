@@ -130,7 +130,10 @@ namespace Final {
       return !this.checkRectangleBallCollision(_game.ball, fieldRect);
     }
 
-    private checkRectangleBallCollision(_ball: Ball, _rect: Rectangle): boolean {
+    private checkRectangleBallCollision(
+      _ball: Ball,
+      _rect: Rectangle
+    ): boolean {
       var distX: number = Math.abs(
         _ball.position.x - _rect.position.x - _rect.width / 2
       );

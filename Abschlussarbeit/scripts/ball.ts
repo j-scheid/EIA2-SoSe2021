@@ -16,7 +16,7 @@ namespace Final {
       this.position.add(this.vel);
       this.vel.scale(0.95);
     }
-    
+
     public render(_ctx: CanvasRenderingContext2D, _game: Game): void {
       _ctx.beginPath();
       _ctx.lineWidth = 2;

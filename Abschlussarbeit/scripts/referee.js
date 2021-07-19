@@ -18,7 +18,9 @@ var Final;
         function Referee(_pos) {
             return _super.call(this, _pos, 4) || this;
         }
-        Referee.prototype.init = function (_game) { return null; };
+        Referee.prototype.init = function (_game) {
+            return null;
+        };
         Referee.prototype.update = function (_game) {
             if (this.shouldBeRunning(_game.ball)) {
                 this.moveTowards(_game.ball.position);
@@ -45,7 +47,8 @@ var Final;
             }
         };
         Referee.prototype.shouldBeRunning = function (_ball) {
-            return Final.Vector.getDistance(_ball.position, this.position) > (Final.canvas.width * (60 / 90)) / 2; //smaller than Referee Radius
+            return (Final.Vector.getDistance(_ball.position, this.position) >
+                (Final.canvas.width * (60 / 90)) / 2); //smaller than Referee Radius
         };
         return Referee;
     }(Final.Movable));

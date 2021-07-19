@@ -87,7 +87,8 @@ namespace Final {
     }
 
     public getSelectedPlayer(): Player | undefined {
-      const selectedPlayerEl: HTMLElement = document.getElementById("selectedPlayer");
+      const selectedPlayerEl: HTMLElement =
+        document.getElementById("selectedPlayer");
       if (!selectedPlayerEl) return;
       const selectedPlayer: number = parseInt(selectedPlayerEl.innerHTML);
 
@@ -176,10 +177,7 @@ namespace Final {
 
       // REFEREE
       const referee: Referee = new Referee(
-        new Vector(
-          this.field.width / 2 - 10,
-          this.field.height / 2 - 10
-        )
+        new Vector(this.field.width / 2 - 10, this.field.height / 2 - 10)
       );
       this.movables.push(referee);
 

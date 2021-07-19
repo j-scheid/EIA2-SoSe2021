@@ -94,9 +94,10 @@ namespace Final {
         this.moveTowards(this.origPosition);
       }
     }
-    
+
     public render(_ctx: CanvasRenderingContext2D, _game: Game): void {
-      const color: string = this.team === 1 ? _game.team1Color : _game.team2Color;
+      const color: string =
+        this.team === 1 ? _game.team1Color : _game.team2Color;
 
       _ctx.beginPath();
       _ctx.lineWidth = 2;
@@ -130,7 +131,7 @@ namespace Final {
           _ctx.arc(
             this.position.x,
             this.position.y,
-            20,  //20 = Player size
+            20, //20 = Player size
             0,
             2 * Math.PI,
             false
@@ -156,7 +157,10 @@ namespace Final {
     }
 
     private shouldBeRunning(_ball: Ball): boolean {
-      return Vector.getDistance(_ball.position, this.position) <= (canvas.width * (30 / 90)) / 2;
+      return (
+        Vector.getDistance(_ball.position, this.position) <=
+        (canvas.width * (30 / 90)) / 2
+      );
     }
 
     private ballCollision(_ball: Ball): boolean {
@@ -165,7 +169,7 @@ namespace Final {
     }
 
     private mouseCollision(): boolean {
-      return Vector.getDistance(mouse, this.position) <= 20;  //20 = Player size
+      return Vector.getDistance(mouse, this.position) <= 20; //20 = Player size
     }
 
     private equals(_other: Player): boolean {
